@@ -51,9 +51,6 @@ const SocialLogin = () => {
         >
           Google
         </Button>
-        <Button className="d-block w-50 my-2 mx-auto" variant="success">
-          Facebook
-        </Button>
         <Button
           onClick={() => signInWithGithub()}
           className="d-block w-50 my-2 mx-auto"

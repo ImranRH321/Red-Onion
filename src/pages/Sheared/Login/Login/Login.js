@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {  useSendPasswordResetEmail, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../../firebase.init";
 import Loading from "../Loading/Loading";
@@ -10,12 +10,16 @@ const Login = () => {
   const useEmail = useRef("");
   const usePassword = useRef("");
   const navigate = useNavigate();
+
   const [
     signInWithEmailAndPassword,
     user,
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending1, error1] = useSendPasswordResetEmail(
+    auth
+  );
 
   let elementError;
   if (error) {
@@ -37,6 +41,16 @@ const Login = () => {
     // console.log(email, password);
     signInWithEmailAndPassword(email,password)
   };
+
+// reset 
+  const handleForgetPassword = () => {
+    const email = useEmail.current.value;
+    sendPasswordResetEmail(email)
+    console.log('reset send ');
+    alert('send reset password')
+  }
+
+
   return (
     <div className="w-50 mx-auto border p-5">
       <div>
@@ -67,6 +81,7 @@ const Login = () => {
             SignUp
           </Link>
         </p>
+        <p>forget password <button onClick={handleForgetPassword} className='btn bg-dark text-white'>Reset</button> </p>
       </div>
       <SocialLogin></SocialLogin>
     </div>
