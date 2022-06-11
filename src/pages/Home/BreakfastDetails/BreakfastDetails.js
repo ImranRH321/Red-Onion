@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {  useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { myContext } from "../../../App";
 
 const BreakfastDetails = () => {
   const { breakfastId } = useParams();
   const [breakfasts, setBreakfast] = useState({});
+  const [cart, setCart] = useContext(myContext)
 
   useEffect(() => {
     fetch("/breakfast.json")
@@ -14,12 +16,14 @@ const BreakfastDetails = () => {
       });
   }, [breakfastId]);
 
-//   console.log(breakfastId);
-//   console.log(breakfasts);
+ const handleAddToCart = () => {
+   const newCart = [...cart,breakfasts]
+   setCart(newCart)
+ }
 
   return (
-    <div className="border">
-      <div className="w-50 ">
+    <div className="border d-flex align-items-center">
+      <div className="w-50 border m-3 p-3">
         <div className="w-50 mx-auto">
           <img
             className="w-50"
@@ -28,11 +32,17 @@ const BreakfastDetails = () => {
             alt="..."
           />
         </div>
-        <div className="w-50 mx-auto">
-          <h6>{breakfasts.name}</h6>
+        <div className="w-75 mx-auto">
+          <h6 className="mt-2">{breakfasts.name}</h6>
           <h5>Price: {breakfasts.price}</h5>
           <p>{breakfasts.details}</p>
+          <button onClick={handleAddToCart} className="btn btn-dark">Add to Cart</button>
         </div>
+      </div> 
+      {/*  */}
+      <div className="w-50 mx-auto">
+         <h2>Cart Container </h2>
+         <Link className="btn btn-link bg-primary text-decoration-none text-white" to='/order'>Order CheckList</Link>
       </div>
     </div>
   );

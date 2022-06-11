@@ -4,6 +4,7 @@ import BreakfastSingle from '../BreakfastSingle/BreakfastSingle';
 
 const Breakfasts = () => {
     const [breakfasts, setBreakfast]  = useState([])
+    
     useEffect( () => {
         fetch('breakfast.json')
         .then(res => res.json())
